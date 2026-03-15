@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    { "source": "/api/scan", "destination": "/api/scan" },
+    { "source": "/(.*)",     "destination": "/public/$1" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" },
+        { "key": "Cache-Control",                "value": "no-store" }
+      ]
+    }
+  ],
+  "functions": {
+    "api/**/*.js": { "maxDuration": 45 }
+  }
+}
