@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subdomain Finder Pro — by ryaakbar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="marquee-top">
+    <div class="marquee-content">
+        SUBDOMAIN FINDER PRO <span class="marquee-dot">◆</span>
+        POWERED BY CRT.SH <span class="marquee-dot">◆</span>
+        FREE RECON TOOL <span class="marquee-dot">◆</span>
+        USE RESPONSIBLY <span class="marquee-dot">◆</span>
+        BUILT BY RYAAKBAR <span class="marquee-dot">◆</span>
+        SECURITY RESEARCH <span class="marquee-dot">◆</span>
+        SUBDOMAIN FINDER PRO <span class="marquee-dot">◆</span>
+        POWERED BY CRT.SH <span class="marquee-dot">◆</span>
+        FREE RECON TOOL <span class="marquee-dot">◆</span>
+        USE RESPONSIBLY <span class="marquee-dot">◆</span>
+        BUILT BY RYAAKBAR <span class="marquee-dot">◆</span>
+        SECURITY RESEARCH <span class="marquee-dot">◆</span>
+    </div>
+</div>
+
+<nav class="navbar" id="navbar">
+    <div class="brand-container">
+        <div class="brand-icon-wrap">
+            <i class="fa-solid fa-magnifying-glass" style="color:white;font-size:0.85rem"></i>
+        </div>
+        <div class="brand-glitch">Sub<span>Finder</span></div>
+    </div>
+    <div class="nav-right">
+        <div class="status-pill">
+            <div class="dot-live"></div>
+            ONLINE
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- HERO -->
+    <div class="hero-header reveal">
+        <div class="hero-badge">🔍 Subdomain Finder Pro — Free</div>
+        <h1 class="hero-title">Temukan <span class="grad-text">Subdomain</span><br>Seketika.</h1>
+        <p class="hero-sub">Scan semua subdomain dari sebuah domain menggunakan data sertifikat SSL publik dari crt.sh.</p>
+    </div>
+
+    <!-- WARNING -->
+    <div class="warning-banner reveal delay-1">
+        <div class="warning-icon">⚠️</div>
+        <div>
+            <div class="warning-title">Gunakan Dengan Bijak & Bertanggung Jawab</div>
+            <div class="warning-text">
+                Tool ini hanya boleh digunakan untuk keperluan <strong>riset keamanan, audit domain milik sendiri, atau bug bounty yang sah</strong>.
+                Dilarang keras menggunakan tool ini untuk aktivitas ilegal, menyerang sistem orang lain tanpa izin, atau tujuan yang merugikan.
+                Penyalahgunaan sepenuhnya menjadi tanggung jawab pengguna. <strong>Developer tidak bertanggung jawab atas penyalahgunaan tool ini.</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCAN CARD -->
+    <div class="glass-card reveal delay-2" id="scanCard">
+        <div class="card-header">
+            <div class="card-header-icon">
+                <i class="fa-solid fa-radar" style="color:white"></i>
+            </div>
+            <div>
+                <div class="header-label">🎯 Target Domain</div>
+                <div class="header-title">Masukkan domain yang ingin di-scan</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="input-group">
+                <label class="input-label">
+                    <i class="fa-solid fa-globe" style="margin-right:5px;color:var(--blue-400)"></i>
+                    Domain Target
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <i class="fa-solid fa-at" style="font-size:13px"></i>
+                    </span>
+                    <input type="text" id="domainInput" class="cyber-input"
+                        placeholder="contoh: google.com"
+                        oninput="onDomainInput(this)"
+                        onkeydown="if(event.key==='Enter') startScan()"
+                        autocomplete="off" autocorrect="off" spellcheck="false">
+                    <button class="input-clear-btn" id="clearBtn" onclick="clearInput()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <!-- Quick domains -->
+                <div class="quick-domains">
+                    <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);align-self:center">Contoh:</span>
+                    <button class="quick-domain" onclick="setDomain('tesla.com')">tesla.com</button>
+                    <button class="quick-domain" onclick="setDomain('github.com')">github.com</button>
+                    <button class="quick-domain" onclick="setDomain('shopify.com')">shopify.com</button>
+                    <button class="quick-domain" onclick="setDomain('discord.com')">discord.com</button>
+                    <button class="quick-domain" onclick="setDomain('vercel.com')">vercel.com</button>
+                </div>
+            </div>
+
+            <button id="scanBtn" class="cyber-button" onclick="startScan()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Mulai Scan</span>
+                <span class="btn-arrow">→</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loading" class="glass-card loading-card hidden">
+        <div class="loader-ring"></div>
+        <div class="loader-title">Scanning Domain...</div>
+        <div class="loader-text">Fetching data dari <span class="loader-domain" id="loadingDomain">-</span></div>
+        <div class="loader-progress"><div class="loader-bar"></div></div>
+    </div>
+
+    <!-- ERROR -->
+    <div id="errorCard" class="glass-card error-card hidden">
+        <div class="error-icon">⚠️</div>
+        <div>
+            <div class="error-title">Scan Gagal</div>
+            <div class="error-body" id="errorText">Terjadi kesalahan.</div>
+        </div>
+    </div>
+
+    <!-- RESULT CARD -->
+    <div id="resultCard" class="glass-card hidden" style="animation: slideUp 0.45s cubic-bezier(0.34,1.56,0.64,1) both">
+
+        <!-- Header -->
+        <div class="result-header-bar">
+            <div class="result-domain-label">
+                Hasil scan: <span id="resultDomain">-</span>
+            </div>
+            <div class="result-badge-wrap">
+                <span class="result-count-badge" id="resultCount">0 subdomain</span>
+                <span class="result-status-badge"><span>●</span> SELESAI</span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row" id="statsRow">
+            <div class="stat-item">
+                <div class="stat-num" id="statTotal">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" id="statUnique">0</div>
+                <div class="stat-label">Unique</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" id="statCategories">0</div>
+                <div class="stat-label">Kategori</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" id="statFiltered">0</div>
+                <div class="stat-label">Ditampilkan</div>
+            </div>
+        </div>
+
+        <!-- Filter & Actions -->
+        <div class="filter-actions">
+            <div class="filter-input-wrap">
+                <i class="fa-solid fa-filter filter-icon" style="font-size:11px"></i>
+                <input type="text" class="filter-input" id="filterInput"
+                    placeholder="Filter subdomain..."
+                    oninput="filterSubdomains(this.value)">
+            </div>
+            <div class="action-btns">
+                <button class="action-btn btn-copy-all" onclick="copyAll()">
+                    <i class="fa-solid fa-copy"></i> Copy All
+                </button>
+                <button class="action-btn btn-export-txt" onclick="exportTxt()">
+                    <i class="fa-solid fa-file-lines"></i> TXT
+                </button>
+                <button class="action-btn btn-export-json" onclick="exportJson()">
+                    <i class="fa-solid fa-file-code"></i> JSON
+                </button>
+                <button class="action-btn btn-clear-result" onclick="clearResult()">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category tabs -->
+        <div class="cat-tabs" id="catTabs"></div>
+
+        <!-- Subdomain list -->
+        <div class="subdomain-list" id="subdomainList"></div>
+
+    </div>
+
+    <footer class="sann-footer reveal">
+        <div class="footer-divider"></div>
+        <p class="footer-text">Powered by</p>
+        <p class="footer-brand">RYAAKBAR</p>
+        <p class="footer-sub">Free forever · Use responsibly · No cap</p>
+    </footer>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="scroll-btns" id="scrollBtns">
+    <button class="scroll-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+    <button class="scroll-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
